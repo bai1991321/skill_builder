@@ -78,14 +78,12 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     }
 
     onSubmit() {
-        console.log("this.resettoken:", this.resetToken);
         if (this.resetPasswordForm.valid && this.resetToken) {
             this.isSendingPassword = true;
             let dataset = {
                 password: this.resetPasswordForm.value['password'],
                 resetToken: this.resetToken
             };
-            console.log("this.resetpasswordform:", dataset);
             this.authService.resetPassword(dataset).subscribe(response => {
                 if (response.statusCode == '401') {
                     this.commonAlertService.typeError("Error", "the resetToken not exist.");

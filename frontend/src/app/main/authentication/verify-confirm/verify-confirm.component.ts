@@ -68,7 +68,6 @@ export class VerifyConfirmComponent implements OnInit, OnDestroy {
         this.isSendingVerifyCode = true;
         this.authService.sendVerifyCodeToEmailOrPhone(this.emailphone, this.verifyType)
             .subscribe(response => {
-                console.log("verify response:", response);
                 this.isSendingVerifyCode = false
                 if (response.statusCode == '1062') {
                     this.isSentVerifyCode = true;
@@ -89,14 +88,12 @@ export class VerifyConfirmComponent implements OnInit, OnDestroy {
                 user_email: this.emailphone, verifyCode: this.verifyCode
             }
             this.authService.confirmVerifyCode(verifyData).subscribe(response => {
-                console.log("verify confirm response:", response);
                 this.isCheckingVerifyCode = false
                 if (response.statusCode == '401') {
                     this.isCheckedVerifyCode = false;
                     this.commonAlertService.typeSuccess("Error", response.statusMessage);
                 } else {
                     this.isCheckedVerifyCode = true;
-                    console.log(this.authService.currentUserValue);
                     let currentUser = this.authService.currentUserValue;
                     currentUser.token = response.result;
                     localStorage.setItem(tokenKey, JSON.stringify(currentUser));

@@ -53,12 +53,6 @@ export class ScrumskillComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        // this._scrumskillService.onSkillsChanged
-        //     .pipe(takeUntil(this._unsubscribeAll))
-        //     .subscribe(skills => {
-        //         console.log("skills:", skills);
-        //         this.skills = skills;
-        //     });
         let dataSet = { tag_name: '' };
         this.doSearchWithKeys(dataSet);
     }
@@ -135,7 +129,6 @@ export class ScrumskillComponent implements OnInit, OnDestroy {
         let dataSet = {
             tag_name: this.searchTextArray.toString()
         }
-        console.log("searching dataset:", dataSet);
         this.doSearchWithKeys(dataSet);
     }
 
@@ -180,7 +173,6 @@ export class ScrumskillComponent implements OnInit, OnDestroy {
             dataSet.ability_userid = this.currentUser ? this.currentUser.user_id : 0
             this.isSearching = true;
             this._scrumskillService.searchAbilities(dataSet).then(result => {
-                console.log("<><><><><><><><><><><>", result);
                 this.isSearching = false;
                 this.abilities = result;
                 this.searchText = '';

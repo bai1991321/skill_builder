@@ -97,7 +97,6 @@ export class ScrumskillService implements Resolve<any> {
   }
   searchSkills(key): Promise<any> {
     return new Promise((resolve, reject) => {
-      console.log("searchSkills called:", key);
       this._httpClient.post<any>(api_url + '/skill/search-skills', key)
         .subscribe((response: any) => {
           this.skills = response;
@@ -109,10 +108,8 @@ export class ScrumskillService implements Resolve<any> {
 
   searchAbilities(key): Promise<any> {
     return new Promise((resolve, reject) => {
-      console.log("searchAbilities called:", key);
       this._httpClient.post<any>(api_url + '/skill/search-abilities', key)
         .subscribe((response: any) => {
-          console.log("???????", response);
           if (response instanceof Array) {
             this.abilities = response;
             this.onAbilitiesChanged.next(this.abilities);
@@ -134,11 +131,9 @@ export class ScrumskillService implements Resolve<any> {
   }
 
   updateSkill(skillRow): Promise<any> {
-    console.log("update skill row:", skillRow);
     return new Promise((resolve, reject) => {
       this._httpClient.post<any>(api_url + '/skill/update-skill', skillRow)
         .subscribe(response => {
-          console.log("update response:", response);
           if (response.statusCode === 401) {
             reject(response);
           }
@@ -147,7 +142,6 @@ export class ScrumskillService implements Resolve<any> {
               this.skills[i] = response.result;
             }
           });
-          console.log("edit skill response:", this.skills);
           this.onSkillsChanged.next(this.skills);
           resolve(this.skills);
         }, reject);
@@ -155,11 +149,9 @@ export class ScrumskillService implements Resolve<any> {
   }
 
   deleteSkill(skillRow): Promise<any> {
-    console.log("delete skill row:", skillRow);
     return new Promise((resolve, reject) => {
       this._httpClient.post<any>(api_url + '/skill/delete-skill/', { skill_id: skillRow.skill_id })
         .subscribe(response => {
-          console.log("delete response:", response);
           if (response.statusCode == 200) {
             this.skills.map((skill, i) => {
               if (skill.skill_id == skillRow.skill_id) {

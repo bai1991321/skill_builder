@@ -127,18 +127,13 @@ export class SkillFormDialogComponent {
   imageCropped(event: ImageCroppedEvent) {
     this.croppedImage = event.base64;
     this.skillForm.controls['skill_image'].setValue(this.croppedImage);
-    // this.skillForm.setValue({ skill_image: this.croppedImage });
-    console.log(event);
   }
   imageLoaded() {
     this.showCropper = true;
-    console.log('Image loaded')
   }
   cropperReady() {
-    console.log('Cropper ready')
   }
   loadImageFailed() {
-    console.log('Load failed');
   }
   rotateLeft() {
     this.imageCropper.rotateLeft();

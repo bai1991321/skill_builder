@@ -67,7 +67,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
                     this.commonAlertService.typeError('Error', JSON.stringify(response.statusMessage), 6000);
                     this.isSaving = false;
                 } else {
-                    console.log(">>>>>>>register result:", response.result);
                     this.router.navigate(['authentication/verify-confirm']);
                 }
             }, (error) => {

@@ -73,7 +73,6 @@ export class AbilityFormDialogComponent {
 
     if (this.action === 'edit') { this.dialogTitle = 'Edit Ability'; }
     else { this.dialogTitle = 'New Ability'; }
-    console.log("ability:", this._data.ability);
     this.ability = Object.assign({}, this._data.ability)
     // this.ability = this._data.ability;
     this.selectedTagValues = this.ability.ability_tags;
@@ -86,7 +85,6 @@ export class AbilityFormDialogComponent {
       this.isDisabled = !(this.currentUser && this.currentUser.user_id == this.ability.ability_userid);
     }
     this.abilityForm = this.createAbilityForm();
-    console.log(">>>>>>>>>ability form:", this.abilityForm);
     // get tags
     this.getTags();
   }
@@ -157,7 +155,6 @@ export class AbilityFormDialogComponent {
       this.abilityForm.controls['ability_tags'].setValue(this.selectedTagValues);
     }
     this.fruitInput.nativeElement.value = '';
-    console.log("selectedTagValues:", this.selectedTagValues);
   }
 
   initFilter() {
@@ -210,18 +207,13 @@ export class AbilityFormDialogComponent {
   imageCropped(event: ImageCroppedEvent) {
     this.croppedImage = event.base64;
     this.abilityForm.controls['ability_image'].setValue(this.croppedImage);
-    // this.skillForm.setValue({ skill_image: this.croppedImage });
-    console.log(event);
   }
   imageLoaded() {
     this.showCropper = true;
-    console.log('Image loaded')
   }
   cropperReady() {
-    console.log('Cropper ready')
   }
   loadImageFailed() {
-    console.log('Load failed');
   }
   rotateLeft() {
     this.imageCropper.rotateLeft();

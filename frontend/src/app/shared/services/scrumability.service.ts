@@ -84,7 +84,6 @@ export class ScrumabilityService {
             response[index] = ability;
           });
           this.abilities = response;
-          console.log("abilities called:", response);
           this.onAbilitiesChanged.next(this.abilities);
           resolve(this.abilities);
         }, reject);
@@ -143,7 +142,6 @@ export class ScrumabilityService {
     return new Promise((resolve, reject) => {
       this._httpClient.post<any>(api_url + '/ability/update-ability', abilityRow)
         .subscribe(response => {
-          console.log("update response:", response);
           if (response.statusCode === 401) {
             reject(response);
           }
@@ -161,11 +159,9 @@ export class ScrumabilityService {
   }
 
   deleteAbility(abilityRow): Promise<any> {
-    console.log("delete ability row:", abilityRow);
     return new Promise((resolve, reject) => {
       this._httpClient.post<any>(api_url + '/ability/delete-ability-by-id/', { ability_id: abilityRow.ability_id })
         .subscribe(response => {
-          console.log("delete response:", response);
           if (response.statusCode == 200) {
             this.abilities.map((ability, i) => {
               if (ability.ability_id == abilityRow.ability_id) {
@@ -206,7 +202,6 @@ export class ScrumabilityService {
     return new Promise((resolve, reject) => {
       this._httpClient.post<any>(api_url + '/ability/add-ability-details', abilityRow)
         .subscribe(response => {
-          console.log(">>>>>>>>>add new step here:", response);
           let tags = response.result.ad_tags ? response.result.ad_tags.toString().split(",") : [];
           response.result.ad_tags = tags;
           this.abilityDetails.push(response.result);
@@ -217,7 +212,6 @@ export class ScrumabilityService {
   }
 
   updateAbilityDetails(abilityRow): Promise<any> {
-    console.log("abilityRow:", abilityRow);
     return new Promise((resolve, reject) => {
       this._httpClient.post<any>(api_url + '/ability/update-ability-details', abilityRow)
         .subscribe(response => {
@@ -226,7 +220,6 @@ export class ScrumabilityService {
           }
           this.abilityDetails.map((detail, i) => {
             if (detail.ad_id === response.result.ad_id) {
-              console.log("response ability details:", response.result);
               let tags = response.result.ad_tags ? response.result.ad_tags.toString().split(",") : [];
               response.result.ad_tags = tags;
               this.abilityDetails[i] = response.result;
@@ -242,7 +235,6 @@ export class ScrumabilityService {
     return new Promise((resolve, reject) => {
       this._httpClient.post<any>(api_url + '/ability/delete-ability-details-by-id/', { ad_id: abilityRow.ad_id })
         .subscribe(response => {
-          console.log("delete response:", response);
           if (response.statusCode == 200) {
             this.abilityDetails.map((detail, i) => {
               if (detail.ad_id == abilityRow.ad_id) {

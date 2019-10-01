@@ -287,7 +287,7 @@ let updateUser = (data, callback) => {
                 return;
             }
             var criteria = {
-                id: data.user_id,
+                user_id: data.user_id,
             }
             var dataToSet = {
                 // "user_email": data.user_email,
@@ -315,7 +315,7 @@ let updateUserPhoto = (data, callback) => {
                 return;
             }
             var criteria = {
-                id: data.user_id,
+                user_id: data.user_id,
             }
             var dataToSet = {
                 "user_image": data.user_image
@@ -345,7 +345,7 @@ let deleteUser = (data, callback) => {
                 return;
             }
             var criteria = {
-                id: data.user_id,
+                user_id: data.user_id,
             }
             userDAO.deleteUser(criteria, (err, dbData) => {
                 if (err) {
@@ -384,7 +384,7 @@ let getUserById = (data, callback) => {
     async.auto({
         user: (cb) => {
             let criteria = {
-                "id": data.user_id
+                "user_id": data.user_id
             }
             userDAO.getUserDetail(criteria, (err, data) => {
                 if (err) {

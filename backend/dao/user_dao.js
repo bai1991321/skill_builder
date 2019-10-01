@@ -47,7 +47,7 @@ let getUserDetail = (criteria, callback) => {
 
 let deleteUser = (criteria, callback) => {
     let conditions = "";
-    criteria.id ? conditions += ` and id = '${criteria.id}'` : true;
+    criteria.user_id ? conditions += ` and user_id = '${criteria.user_id}'` : true;
     console.log(`delete from users where 1 ${conditions}`);
     dbConfig.getDB().query(`delete from users where 1 ${conditions}`, callback);
 

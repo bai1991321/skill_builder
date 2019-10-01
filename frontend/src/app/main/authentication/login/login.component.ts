@@ -54,12 +54,10 @@ export class LoginComponent implements OnInit {
 
     onSubmit() {
         if (this.loginForm.valid) {
-            console.log(this.loginForm.value);
             this.authService.login(this.loginForm.value).subscribe(result => {
                 if (result.statusCode == 401) {
                     this.commonAlertService.typeError('Error', result.statusMessage);
                 } else {
-                    console.log("verified? ", this.authService.isVerified());
                     if (!this.authService.isVerified()) {
                         this.router.navigate(['authentication/verify-confirm']);
                     } else {

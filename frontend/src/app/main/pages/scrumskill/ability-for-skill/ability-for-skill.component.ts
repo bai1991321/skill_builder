@@ -61,7 +61,6 @@ export class AbilityForSkillComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.skill_id = params.get('id');
-      console.log("ability_skillid for skill:", this.skill_id);
       let dataSet = { tag_name: '', ability_skillid: this.skill_id };
       // first get skill info with skill_id
       this.getSkillWithId(this.skill_id);
@@ -101,7 +100,6 @@ export class AbilityForSkillComponent implements OnInit {
         switch (actionType) {
           case 'add':
             this._scrumabilityService.addAbility(formData.getRawValue()).then(response => {
-              console.log(">>>>>>>>added new ability:", response);
             }).catch(error => {
               console.error("<<<<<<<<<<<", error);
             });
@@ -131,7 +129,6 @@ export class AbilityForSkillComponent implements OnInit {
         switch (actionType) {
           case 'save':
             this._scrumabilityService.updateAbility(formData.getRawValue()).then(response => {
-              console.log(">>>>>>>>edit ability:", response);
               this.abilities = response;
             }).catch(error => {
               console.error("<<<<<<<<<<<edit abilty eror:", error);
@@ -187,7 +184,6 @@ export class AbilityForSkillComponent implements OnInit {
       this._scrumabilityService.searchAbilities(dataSet).then(result => {
         this.isSearching = false;
         this.abilities = result;
-        console.log("ability list:", this.abilities);
         this.searchText = '';
       }).catch((error) => {
         console.error("error:", error);
@@ -212,7 +208,6 @@ export class AbilityForSkillComponent implements OnInit {
 
   viewDetails(ability) {
     if (this.currentUser.user_id == ability.ability_userid) {
-      console.log("ability info:", ability);
       this._router.navigate(['pages/ability-for-skill/' + this.skill.skill_id + '/ability-detail/' + ability.ability_id]);
     }
   }

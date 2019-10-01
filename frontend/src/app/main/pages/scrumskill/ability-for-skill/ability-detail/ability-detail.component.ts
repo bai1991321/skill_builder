@@ -75,7 +75,6 @@ export class AbilityDetailComponent implements OnInit {
   }
   getAbility() {
     this._scrumabilityService.getAbility(this.ad_abilityid).then(response => {
-      console.log("ability info:", response);
       this.ability = response;
     })
   }
@@ -89,9 +88,7 @@ export class AbilityDetailComponent implements OnInit {
       this._scrumabilityService.searchAbilityDetails(dataSet).then(result => {
         this.abilityDetails = result;
         this.refreshList();
-        console.log("ability list:", this.abilityDetails);
       }).catch((error) => {
-        console.error("error:", error);
         this.commonAlertService.typeError('Ability Details', JSON.stringify(error), 6000);
       });
     }
@@ -119,7 +116,6 @@ export class AbilityDetailComponent implements OnInit {
         switch (actionType) {
           case 'add':
             this._scrumabilityService.addAbilityDetails(formData.getRawValue()).then(response => {
-              console.log(">>>>>>>>added new step:", response);
             }).catch(error => {
               console.error("<<<<<<<<<<<add new step error:", error);
             });
@@ -145,7 +141,6 @@ export class AbilityDetailComponent implements OnInit {
         }
         const actionType: string = response[0];
         const formData: FormGroup = response[1];
-        console.log("edit form data:", formData);
         switch (actionType) {
           case 'save':
             this._scrumabilityService.updateAbilityDetails(formData.getRawValue()).then(response => {
@@ -199,14 +194,6 @@ export class AbilityDetailComponent implements OnInit {
             detail.ad_tags.push(newTag.tag_name.trim());
             this.tagService.addTag(newTag);
             this._scrumabilityService.updateAbilityDetails(detail);
-
-
-            console.log(">>>>>>>abilityDetails:", this.abilityDetails);
-            // this._scrumabilityService.addAbilityDetails(formData.getRawValue()).then(response => {
-            //   console.log(">>>>>>>>added new step:", response);
-            // }).catch(error => {
-            //   console.error("<<<<<<<<<<<add new step error:", error);
-            // });
             break;
           default:
             break;

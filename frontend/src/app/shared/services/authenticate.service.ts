@@ -29,7 +29,6 @@ export class AuthenticateService {
   login(formData) {
     return this.httpClient.post<any>(api_url + '/user/login', formData)
       .pipe(map(response => {
-        console.log("login response:", response);
         if (response.statusCode == 401) {
           return response;
         }
@@ -93,7 +92,6 @@ export class AuthenticateService {
   }
 
   confirmToken(formData) {
-    console.log(">>>>>>>>>", formData);
     return this.httpClient.post<any>(api_url + '/user/confirm-verification-mail', formData)
       .pipe(map(response => {
         return response;
@@ -108,7 +106,6 @@ export class AuthenticateService {
   }
   
   resetPassword(formData) {
-    console.log(">>>>>>>>>", formData);
     return this.httpClient.post<any>(api_url + '/user/reset-password', formData)
       .pipe(map(response => {
         return response;

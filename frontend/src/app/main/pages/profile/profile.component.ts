@@ -123,17 +123,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
     imageCropped(event: ImageCroppedEvent) {
         this.croppedImage = event.base64;
         this.photoForm.setValue({ user_image: this.croppedImage });
-        console.log(event);
     }
     imageLoaded() {
         this.showCropper = true;
-        console.log('Image loaded')
     }
     cropperReady() {
-        console.log('Cropper ready')
     }
     loadImageFailed() {
-        console.log('Load failed');
     }
     rotateLeft() {
         this.imageCropper.rotateLeft();

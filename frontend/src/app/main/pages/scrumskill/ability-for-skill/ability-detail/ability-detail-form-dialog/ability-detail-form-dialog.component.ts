@@ -54,7 +54,6 @@ export class AbilityDetailFormDialogComponent {
 
     if (this.action === 'edit') { this.dialogTitle = 'Edit Step'; }
     else { this.dialogTitle = 'New Step'; }
-    console.log("ability detail:", this._data.abilityDetail);
     this.abilityDetail = Object.assign({}, this._data.abilityDetail);
     this.selectedTagValues = this.abilityDetail.ad_tags;
 
@@ -127,7 +126,6 @@ export class AbilityDetailFormDialogComponent {
       this.abilityDetailForm.controls['ad_tags'].setValue(this.selectedTagValues);
     }
     this.fruitInput.nativeElement.value = '';
-    console.log("selectedTagValues:", this.selectedTagValues);
   }
 
   initFilter() {

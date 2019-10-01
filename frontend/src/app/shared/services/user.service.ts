@@ -20,7 +20,6 @@ export class UserService {
   updateUserInfo(formData) {
     return this.httpClient.put<any>(api_url + '/user/update-user', formData)
       .pipe(map(response => {
-        console.log("user info response:", response);
         return response.result;
       }));
   }

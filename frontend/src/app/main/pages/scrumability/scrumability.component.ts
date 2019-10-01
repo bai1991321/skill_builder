@@ -139,7 +139,6 @@ export class ScrumabilityComponent implements OnInit {
     let dataSet = {
       tag_name: this.searchTextArray.toString()
     }
-    console.log("searching dataset:", dataSet);
     this.doSearchAbilitiesWithKeys(dataSet);
   }
 
@@ -167,7 +166,6 @@ export class ScrumabilityComponent implements OnInit {
     // }
 
     if (this.currentUser.user_id == ability.ability_userid) {
-      console.log("ability info:", ability);
       this._router.navigate(['pages/ability-for-skill/' + ability.ability_skillid + '/ability-detail/' + ability.ability_id]);
     }
   }

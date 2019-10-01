@@ -69,7 +69,6 @@ export class AbilityDialogComponent {
     this.ability.ability_userid = this.currentUser ? this.currentUser.user_id : 0;
 
     this.abilityForm = this.createAbilityForm();
-    console.log(">>>>>>>>>ability form:", this.abilityForm);
     
     // get tags and skills with own userid
     this.getTags();
@@ -149,7 +148,6 @@ export class AbilityDialogComponent {
       this.abilityForm.controls['ability_tags'].setValue(this.selectedTagValues);
     }
     this.fruitInput.nativeElement.value = '';
-    console.log("selectedTagValues:", this.selectedTagValues);
   }
 
   initFilter() {
