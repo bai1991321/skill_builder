@@ -1,0 +1,107 @@
+<div class="dialog-content-wrapper">
+    <mat-toolbar matDialogTitle class="mat-accent m-0">
+        <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="title dialog-title">{{dialogTitle}}</span>
+            <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+
+    <div mat-dialog-content class="p-24 pb-0 m-0" fusePerfectScrollbar>
+
+        <form [formGroup]="skillForm">
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Skill Name</mat-label>
+                    <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+                    <input name="skill_name" formControlName="skill_name" matInput>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start start" *ngIf="isAuthenticated">
+                <mat-form-field appearance="outline" fxFlex>
+                    <input type="text" matInput hidden="true">
+                    <mat-radio-group formControlName="skill_state">
+                        <mat-radio-button value="public" class="mx-4">Public</mat-radio-button>
+                        <mat-radio-button value="private" class="mx-4">Private</mat-radio-button>
+                    </mat-radio-group>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <mat-form-field appearance="outline" fxFlex="100">
+                    <mat-label>Tag Color</mat-label>
+                    <mat-select formControlName="skill_bgcolor" required>
+                        <mat-option *ngFor="let color of skillbgColors" [value]="color.value">
+                            <div fxLayout="row" fxLayoutAlign="start center">
+                                <div class="w-20 h-20 m-4" [ngClass]="color.value"></div>
+                                <span class="mx-3">{{color.viewValue}}</span>
+                            </div>
+                        </mat-option>
+                    </mat-select>
+                    <mat-icon matSuffix class="secondary-text">outlined_flag</mat-icon>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <input type="text" matInput hidden="true">
+                    <input type="file" id="skill_image" (change)="fileProgress($event)" hidden="true">
+                    <div class="skill-img" (click)="openFileBrowser()" *ngIf="!croppedImage">
+                        <img *ngIf="skillForm.controls.skill_image.value"
+                            [src]="transform(skillForm.controls.skill_image.value)"
+                            class="transition mb-2 custom-skill-img">
+                        <img *ngIf="!skillForm.controls.skill_image.value" src="assets/none.jpg"
+                            class="transition mb-2 custom-skill-img">
+                    </div>
+                    <div class="skill-img" (click)="openFileBrowser()" *ngIf="croppedImage"
+                        [@animate]="{value:'*',params:{y:'0%'}}">
+                        <img [src]="transform(croppedImage)" class="transition mb-2 custom-skill-img">
+                    </div>
+                    <div class="cropper_container">
+                        <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
+                            [aspectRatio]="4 / 4" [resizeToWidth]="128" format="png" imageQuality="256"
+                            (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
+                            (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()">
+                        </image-cropper>
+                    </div>
+                </mat-form-field>
+            </div>
+        </form>
+    </div>
+    <div *ngIf="!currentUser" mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="end center">
+
+        <button *ngIf="action === 'edit'" mat-button class="mr-8" (click)="matDialogRef.close(['delete',skillForm])"
+            aria-label="Delete" matTooltip="Delete">
+            DELETE
+        </button>
+
+        <button *ngIf="action !== 'edit'" mat-button class="save-button"
+            (click)="matDialogRef.close(['add', skillForm])" [disabled]="skillForm.invalid" aria-label="SAVE">
+            ADD
+        </button>
+
+        <button *ngIf="action === 'edit' " mat-button class="save-button"
+            (click)="matDialogRef.close(['save',skillForm])" [disabled]="skillForm.invalid" aria-label="SAVE">
+            SAVE
+        </button>
+
+    </div>
+    <div *ngIf="currentUser" mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="end center">
+
+        <button *ngIf="action === 'edit' && currentUser.user_id === skillForm.controls.skill_userid.value" mat-button
+            class="mr-8" (click)="matDialogRef.close(['delete',skillForm])" aria-label="Delete" matTooltip="Delete">
+            DELETE
+        </button>
+
+        <button *ngIf="action !== 'edit'" mat-button class="save-button"
+            (click)="matDialogRef.close(['add', skillForm])" [disabled]="skillForm.invalid" aria-label="SAVE">
+            ADD
+        </button>
+
+        <button *ngIf="action === 'edit'  && currentUser.user_id === skillForm.controls.skill_userid.value" mat-button
+            class="save-button" (click)="matDialogRef.close(['save',skillForm])" [disabled]="skillForm.invalid"
+            aria-label="SAVE">
+            SAVE
+        </button>
+
+    </div>
+</div>

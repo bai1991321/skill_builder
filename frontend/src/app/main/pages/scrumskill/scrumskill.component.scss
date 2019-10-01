@@ -1,0 +1,104 @@
+@import "src/@fuse/scss/fuse";
+
+scrumskill {
+  min-height: 100%;
+
+  #skills {
+    width: 100%;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+
+    .header {
+      width: 100%;
+      h1 {
+        font-size: 40px;
+        font-weight: 300;
+      }
+      .search-wrapper {
+        width: 100%;
+        max-width: 480px;
+        border-radius: 28px;
+        overflow: hidden;
+        @include mat-elevation(1);
+
+        .search {
+          width: 100%;
+          height: 48px;
+          line-height: 48px;
+          padding: 0 18px;
+
+          input {
+            width: 100%;
+            height: 48px;
+            min-height: 48px;
+            max-height: 48px;
+            padding: 0 16px;
+            border: none;
+            outline: none;
+          }
+        }
+      }
+    }
+
+    .skill-list {
+      padding: 32px 0;
+      max-height: none !important;
+
+      .skill-list-item {
+        min-width: 210px;
+        min-height: 210px;
+        width: 210px;
+        height: 210px;
+        // padding: 24px 0;
+        margin: 16px;
+        border-radius: 8px;
+        background: rgba(0, 0, 0, 0.12);
+        transition: box-shadow 150ms ease-in;
+        cursor: pointer;
+
+        &:hover:not(.add-new-skill) {
+          @include mat-elevation(8);
+        }
+
+        .board-name {
+          padding: 16px 32px 0 32px;
+          font-weight: 300;
+          font-size: 16px;
+          text-align: center;
+        }
+
+        &.add-new-skill {
+          background: rgba(0, 0, 0, 0.06);
+          border: 2px dashed rgba(255, 255, 255, 0.37);
+        }
+      }
+    }
+  }
+}
+
+.custom-matchip-center {
+  margin: auto !important;
+}
+.mat-divider {
+  border-top-color: red;
+}
+
+.custom-skill-img {
+  max-width: 180px;
+  max-height: 180px;
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  margin: auto;
+  display: flex;
+}
+
+.custom-skill-listitem {
+  position: relative;
+  .edit-skill-button {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    z-index: 999;
+  }
+}

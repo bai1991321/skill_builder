@@ -1,0 +1,116 @@
+<div class="dialog-content-wrapper">
+    <mat-toolbar matDialogTitle class="mat-accent m-0">
+        <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="title dialog-title">{{dialogTitle}}</span>
+            <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+
+    <div mat-dialog-content class="p-24 pb-0 m-0" fusePerfectScrollbar>
+
+        <form [formGroup]="abilityForm">
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Ability Name</mat-label>
+                    <mat-icon matSuffix class="secondary-text">account_circle</mat-icon>
+                    <input name="ability_name" formControlName="ability_name" matInput required>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Tags</mat-label>
+                    <mat-chip-list #chipList aria-label="Fruit selection">
+                        <mat-chip *ngFor="let tag of selectedTagValues" [selectable]="selectable"
+                            [removable]="removable" (removed)="remove(tag)">
+                            {{tag}}
+                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                        </mat-chip>
+                        <input placeholder="Tags..." #fruitInput [formControl]="abilityForm.controls.ability_tags"
+                            [matAutocomplete]="auto" [matChipInputFor]="chipList"
+                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                            (matChipInputTokenEnd)="add($event)">
+                    </mat-chip-list>
+                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                        <mat-option *ngFor="let tag of filterdTags | async" [value]="tag.tag_name">
+                            {{tag.tag_name}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start start" *ngIf="isAuthenticated">
+                <mat-form-field appearance="outline" fxFlex>
+                    <input type="text" matInput hidden="true">
+                    <mat-radio-group formControlName="ability_state">
+                        <mat-radio-button value="public" class="mx-4">Public</mat-radio-button>
+                        <mat-radio-button value="private" class="mx-4">Private</mat-radio-button>
+                    </mat-radio-group>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field appearance="outline" fxFlex>
+                    <input type="text" matInput hidden="true">
+                    <input type="file" id="ability_image" (change)="fileProgress($event)" hidden="true">
+                    <div class="ability-img" (click)="openFileBrowser()" *ngIf="!croppedImage">
+                        <img *ngIf="abilityForm.controls.ability_image.value"
+                            [src]="transform(abilityForm.controls.ability_image.value)"
+                            class="transition mb-2 custom-ability-img">
+                        <img *ngIf="!abilityForm.controls.ability_image.value" src="assets/none.jpg"
+                            class="transition mb-2 custom-ability-img">
+                    </div>
+                    <div class="ability-img" (click)="openFileBrowser()" *ngIf="croppedImage"
+                        [@animate]="{value:'*',params:{y:'0%'}}">
+                        <img [src]="transform(croppedImage)" class="transition mb-2 custom-ability-img">
+                    </div>
+                    <div class="cropper_container">
+                        <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
+                            [aspectRatio]="4 / 4" [resizeToWidth]="128" format="png" imageQuality="256"
+                            (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
+                            (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()">
+                        </image-cropper>
+                    </div>
+                </mat-form-field>
+            </div>
+
+        </form>
+    </div>
+    <div *ngIf="!currentUser" mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="end center">
+
+        <button *ngIf="action === 'edit'" mat-button class="mr-8" (click)="matDialogRef.close(['delete',abilityForm])"
+            aria-label="Delete" matTooltip="Delete">
+            DELETE
+        </button>
+
+        <button *ngIf="action !== 'edit'" mat-button class="save-button"
+            (click)="matDialogRef.close(['add', abilityForm])" [disabled]="abilityForm.invalid" aria-label="SAVE">
+            ADD
+        </button>
+
+        <button *ngIf="action === 'edit' " mat-button class="save-button"
+            (click)="matDialogRef.close(['save',abilityForm])" [disabled]="abilityForm.invalid" aria-label="SAVE">
+            SAVE
+        </button>
+
+    </div>
+    <div *ngIf="currentUser" mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="end center">
+
+        <button *ngIf="action === 'edit' && currentUser.user_id === abilityForm.controls.ability_userid.value"
+            mat-button class="mr-8" (click)="matDialogRef.close(['delete',abilityForm])" aria-label="Delete"
+            matTooltip="Delete">
+            DELETE
+        </button>
+
+        <button *ngIf="action !== 'edit'" mat-button class="save-button"
+            (click)="matDialogRef.close(['add', abilityForm])" [disabled]="abilityForm.invalid" aria-label="SAVE">
+            ADD
+        </button>
+
+        <button *ngIf="action === 'edit'  && currentUser.user_id === abilityForm.controls.ability_userid.value"
+            mat-button class="save-button" (click)="matDialogRef.close(['save',abilityForm])"
+            [disabled]="abilityForm.invalid" aria-label="SAVE">
+            SAVE
+        </button>
+
+    </div>
+</div>

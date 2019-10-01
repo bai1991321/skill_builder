@@ -1,0 +1,128 @@
+<!-- BOARDS -->
+<div id="skills" class="fuse-navy" fxLayout="column" fxLayoutAlign="start center" fxFlex fusePerfectScrollbar>
+
+    <!-- HEADER -->
+    <div class="header accent p-16 p-sm-24" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-xs="row"
+        fxLayoutAlign.gt-xs="space-between center">
+
+        <div fxLayout="row" fxLayoutAlign="start center">
+            <div class="logo" fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon class="logo-icon mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">account_box
+                </mat-icon>
+                <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    Skills
+                </span>
+            </div>
+
+        </div>
+        <!-- SEARCH -->
+        <div class="ml-sm-32" fxLayout="row" fxLayoutAlign="center center" fxFlex>
+
+            <div class="search-wrapper custom-search-wrapper mt-16 mt-sm-0">
+
+                <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon>search</mat-icon>
+                    <input placeholder="Search for a contact" (keyup.enter)="onEnterSearch($event)"
+                        [(ngModel)]="searchText">
+                </div>
+            </div>
+        </div>
+        <!-- / SEARCH -->
+
+    </div>
+    <!-- / HEADER -->
+    <div class="mt-16" fxFlex="0 0 auto" fxLayout="row wrap" fxLayoutAlign="center center"
+        [@animateStagger]="{value:'50'}">
+        <mat-chip-list aria-label="Fish selection">
+            <mat-chip *ngFor="let searchkey of searchTextArray" removable="true" (removed)="removeKeys(searchkey)"
+                (click)="clickSearchKey(searchkey)">
+                {{searchkey}}
+                <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+        </mat-chip-list>
+    </div>
+    <mat-list class="w-90-p text-center">
+        <mat-list-item>
+            Skills({{skills ? skills.length : 0}})
+        </mat-list-item>
+        <mat-divider class="w-100-p"></mat-divider>
+    </mat-list>
+    <!-- BOARD LIST -->
+    <div class="skill-list" fxFlex="0 0 auto" fxLayout="row wrap" fxLayoutAlign="center center"
+        [@animateStagger]="{value:'50'}">
+
+        <!-- BOARD -->
+        <div *ngFor="let skill of skills">
+            <!-- [routerLink]="'/apps/scrumskill/skills/'+skill.id+'/'+skill.uri" -->
+            <div class="skill-list-item custom-skill-listitem" fxLayout="column" fxLayoutAlign="center center"
+                [@animate]="{value:'*',params:{y:'100%'}}">
+                <img *ngIf="skill.skill_image" [src]="transform(skill.skill_image)"
+                    class="transition mb-2 custom-skill-img" (click)="goAbilitiesForSkill(skill)">
+                <img *ngIf="!skill.skill_image" src="assets/none.jpg" class="transition mb-2 custom-skill-img"
+                    (click)="goAbilitiesForSkill(skill)">
+
+                <button *ngIf="currentUser && currentUser.user_id == skill.skill_userid" mat-mini-fab color="warn"
+                    class="edit-skill-button" (click)="editSkill(skill)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button *ngIf="currentUser && currentUser.user_id != skill.skill_userid" mat-mini-fab color="warn"
+                    class="edit-skill-button" (click)="editSkill(skill)">
+                    <mat-icon>visibility</mat-icon>
+                </button>
+
+            </div>
+            <mat-chip-list>
+                <mat-chip selected class="custom-matchip-center" [ngClass]="skill.skill_bgcolor"
+                    [@animate]="{value:'*', params:{delay:'300ms',scale:'0.2'}}" (click)="editSkill(skill)">
+                    {{skill.skill_name}}
+                </mat-chip>
+            </mat-chip-list>
+        </div>
+        <!-- / BOARD -->
+
+        <!-- NEW BOARD BUTTON -->
+        <div>
+            <div class="skill-list-item add-new-skill" fxLayout="column" fxLayoutAlign="center center"
+                (click)="newSkill(emptySkill)" [@animate]="{value:'*',params:{y:'100%'}}">
+                <mat-icon class="s-56">add_circle</mat-icon>
+            </div>
+
+            <mat-chip-list>
+                <mat-chip selected class="custom-matchip-center" (click)="newSkill(emptySkill)">
+                    <div class="board-name">
+                        Add New Skill {{emptySkill.skill_name ? 'called ' + emptySkill.skill_name : ''}}
+                    </div>
+                </mat-chip>
+            </mat-chip-list>
+        </div>
+        <!-- / NEW BOARD BUTTON -->
+
+    </div>
+    <!-- / BOARD LIST -->
+    <mat-list class="w-90-p text-center">
+        <mat-list-item>
+            Abilities({{abilities ? abilities.length : 0}})
+        </mat-list-item>
+        <mat-divider class="w-100-p"></mat-divider>
+    </mat-list>
+    <!-- Ability LIST -->
+    <div class="skill-list" fxFlex="0 0 auto" fxLayout="row wrap" fxLayoutAlign="center center"
+        [@animateStagger]="{value:'50'}">
+
+        <!-- BOARD -->
+        <div *ngFor="let ability of abilities">
+            <div class="skill-list-item" fxLayout="column" fxLayoutAlign="center center"
+                [@animate]="{value:'*',params:{y:'100%'}}">
+                <img class="ng-tns-c113-324" src="assets/images/cards/card1.jpg">
+            </div>
+            <mat-chip-list>
+                <mat-chip selected class="custom-matchip-center">{{ability.ability_name}}
+                </mat-chip>
+            </mat-chip-list>
+        </div>
+        <!-- / BOARD -->
+    </div>
+    <!-- / Ability LIST -->
+
+</div>
+<!-- / BOARDS -->

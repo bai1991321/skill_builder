@@ -1,0 +1,130 @@
+@import "src/@fuse/scss/fuse";
+
+scrumability {
+  min-height: 100%;
+
+  #abilities {
+    width: 100%;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+
+    .header {
+      width: 100%;
+      h1 {
+        font-size: 40px;
+        font-weight: 300;
+      }
+      .search-wrapper {
+        width: 100%;
+        max-width: 480px;
+        border-radius: 28px;
+        overflow: hidden;
+        @include mat-elevation(1);
+
+        .search {
+          width: 100%;
+          height: 48px;
+          line-height: 48px;
+          padding: 0 18px;
+
+          input {
+            width: 100%;
+            height: 48px;
+            min-height: 48px;
+            max-height: 48px;
+            padding: 0 16px;
+            border: none;
+            outline: none;
+          }
+        }
+      }
+    }
+
+    .scrumability-list {
+      padding: 32px 0;
+      max-height: none !important;
+
+      .scrumability-list-item {
+        min-width: 210px;
+        min-height: 210px;
+        width: 210px;
+        height: 210px;
+        // padding: 24px 0;
+        margin: 16px;
+        border-radius: 8px;
+        background: rgba(0, 0, 0, 0.12);
+        transition: box-shadow 150ms ease-in;
+        cursor: pointer;
+
+        &:hover:not(.add-new-ability) {
+          @include mat-elevation(8);
+        }
+
+        .board-name {
+          padding: 16px 32px 0 32px;
+          font-weight: 300;
+          font-size: 16px;
+          text-align: center;
+        }
+
+        &.add-new-ability {
+          background: rgba(0, 0, 0, 0.06);
+          border: 2px dashed rgba(255, 255, 255, 0.37);
+        }
+
+        
+      }
+
+      .scrolling-wrapper {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: hidden;
+        width: 200px;
+    
+        .card {
+          flex: 0 0 auto;
+          padding: 16px;
+        }
+      }
+      div.mat-chip-list-wrapper {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-left: 3px;
+        padding-right: 3px;
+        margin-right: 3px;
+    
+        .mat-chip {
+          flex: 0 0 auto;
+        }
+      }
+    }
+  }
+}
+
+.custom-matchip-center {
+  margin: auto !important;
+}
+.mat-divider {
+  border-top-color: red;
+}
+
+.custom-ability-img {
+  max-width: 180px;
+  max-height: 180px;
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  margin: auto;
+  display: flex;
+}
+
+.custom-scrumability-listitem {
+  position: relative;
+  .edit-ability-button {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    z-index: 999;
+  }
+}

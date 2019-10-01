@@ -1,0 +1,268 @@
+@mixin scrumability-theme($theme) {
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+  $accent: map-get($theme, accent);
+
+  scrumability {
+    #abilities {
+      .header {
+        // background-color: map-get($accent, default);
+        // color: map-get($accent, default-contrast);
+
+        .custom-search-wrapper {
+          background: map-get($background, card) !important;
+
+          .search {
+            .mat-icon {
+              color: map-get($foreground, icon) !important;
+            }
+
+            input {
+              background: map-get($background, card) !important;
+              color: map-get($foreground, text) !important;
+            }
+          }
+        }
+      }
+    }
+  }
+  scrumability {
+    #abilities {
+      .header {
+        // background-color: map-get($accent, default);
+        // color: map-get($accent, default-contrast);
+
+        .custom-search-wrapper {
+          background: map-get($background, card) !important;
+
+          .search {
+            .mat-icon {
+              color: map-get($foreground, icon) !important;
+            }
+
+            input {
+              background: map-get($background, card) !important;
+              color: map-get($foreground, text) !important;
+            }
+          }
+        }
+      }
+    }
+  }
+  scrumabilityDetail {
+    #abilityDetails {
+      .header {
+        // background-color: map-get($accent, default);
+        // color: map-get($accent, default-contrast);
+
+        .custom-search-wrapper {
+          background: map-get($background, card) !important;
+
+          .search {
+            .mat-icon {
+              color: map-get($foreground, icon) !important;
+            }
+
+            input {
+              background: map-get($background, card) !important;
+              color: map-get($foreground, text) !important;
+            }
+          }
+        }
+      }
+    }
+  }
+  // List
+  scrumability-scrumability-list {
+    #board {
+      > .header {
+        // background-color: map-get($accent, default);
+        // color: map-get($accent, default-contrast);
+
+        .search-wrapper {
+          background: map-get($background, card);
+
+          .search {
+            .mat-icon {
+              color: map-get($foreground, icon);
+            }
+
+            input {
+              background: map-get($background, card);
+              color: map-get($foreground, text);
+            }
+          }
+        }
+      }
+    }
+
+    .list {
+      .list-header,
+      .list-content,
+      .list-footer {
+        background: map-get($background, app-bar);
+      }
+
+      .list-header {
+        border-bottom-color: map-get($foreground, divider);
+      }
+
+      .list-footer {
+        border-top-color: map-get($foreground, divider);
+      }
+    }
+  }
+
+  // Add list
+  scrumability-ability-add-list {
+    .new-list {
+      background: map-get($background, app-bar);
+
+      .new-list-form {
+        > input {
+          background: map-get($background, app-bar);
+          color: map-get($foreground, text);
+        }
+      }
+    }
+  }
+
+  // Board
+  scrumability-ability {
+    #board {
+      > .header {
+        // background-color: map-get($accent, default);
+        // color: map-get($accent, default-contrast);
+
+        .search-wrapper {
+          background: map-get($background, card);
+
+          .search {
+            .mat-icon {
+              color: map-get($foreground, icon);
+            }
+
+            input {
+              background: map-get($background, card);
+              color: map-get($foreground, text);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Add card directive
+  scrumability-ability-add-card {
+    .add-card-button {
+      background-color: map-get($background, app-bar);
+    }
+
+    .add-card-form-wrapper {
+      background-color: map-get($background, app-bar);
+    }
+  }
+
+  // Card
+  scrumability-ability-card {
+    background-color: map-get($background, card);
+    border-color: map-get($foreground, divider);
+
+    .list-card-details {
+      .list-card-badges {
+        .badge {
+          background-color: rgba(0, 0, 0, 0.4);
+          color: #ffffff;
+
+          &.due-date {
+            background-color: mat-color(mat-palette($mat-green));
+
+            &.overdue {
+              background-color: mat-color(mat-palette($mat-red));
+            }
+          }
+
+          &.check-items {
+            &.completed {
+              background-color: mat-color(mat-palette($mat-green));
+            }
+          }
+        }
+      }
+    }
+
+    .list-card-footer {
+      border-top-color: map-get($foreground, divider);
+
+      .list-card-footer-item {
+        color: map-get($foreground, secondary-text);
+      }
+    }
+  }
+
+  // Card dialog
+  .scrumability-card-dialog {
+    .mat-dialog-container {
+      .mat-dialog-content {
+        .sections {
+          .section {
+            border-bottom-color: map-get($foreground, divider);
+
+            .attachments {
+              .attachment {
+                .attachment-preview {
+                  background-color: map-get($background, card);
+                }
+
+                .attachment-content {
+                  .attachment-time {
+                    color: map-get($foreground, secondary-text);
+                  }
+                }
+              }
+            }
+
+            .comments {
+              .comment {
+                .comment-bubble {
+                  background-color: map-get($background, app-bar);
+                  border-color: map-get($background, app-bar);
+
+                  &:after,
+                  &:before {
+                    border-color: map-get($background, app-bar) transparent transparent transparent;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .scrumability-labels-menu {
+    .mat-menu-content {
+      .views {
+        .view {
+          > .header {
+            border-bottom-color: map-get($foreground, divider);
+          }
+        }
+      }
+    }
+  }
+
+  // Settings
+  scrumability-ability-settings {
+    .views {
+      .view {
+        > .header {
+          border-bottom-color: map-get($foreground, divider);
+          background: map-get($accent, default);
+          color: map-get($accent, default-contrast);
+        }
+      }
+    }
+  }
+}

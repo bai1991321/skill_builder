@@ -1,0 +1,92 @@
+<!-- BOARDS -->
+<div id="abilities" class="fuse-navy" fxLayout="column" fxLayoutAlign="start center" fxFlex fusePerfectScrollbar>
+
+    <!-- HEADER -->
+    <div class="header accent p-16 p-sm-24" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-xs="row"
+        fxLayoutAlign.gt-xs="space-between center">
+
+        <div fxLayout="row" fxLayoutAlign="start center">
+            <div class="logo" fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon class="logo-icon mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">account_box
+                </mat-icon>
+                <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    Abilities
+                </span>
+            </div>
+
+        </div>
+        <!-- SEARCH -->
+        <div class="ml-sm-32" fxLayout="row" fxLayoutAlign="center center" fxFlex>
+
+            <div class="search-wrapper custom-search-wrapper mt-16 mt-sm-0">
+
+                <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon>search</mat-icon>
+                    <input placeholder="Search for a contact" (keyup.enter)="onEnterSearch($event)"
+                        [(ngModel)]="searchText">
+                </div>
+            </div>
+        </div>
+        <!-- / SEARCH -->
+
+    </div>
+    <!-- / HEADER -->
+    <div class="mt-16" fxFlex="0 0 auto" fxLayout="row wrap" fxLayoutAlign="center center"
+        [@animateStagger]="{value:'50'}">
+        <mat-chip-list aria-label="Fish selection">
+            <mat-chip *ngFor="let searchkey of searchTextArray" removable="true" (removed)="removeKeys(searchkey)"
+                (click)="clickSearchKey(searchkey)">
+                {{searchkey}}
+                <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+        </mat-chip-list>
+    </div>
+    <!-- BOARD LIST -->
+    <div class="scrumability-list" fxFlex="0 0 auto" fxLayout="row wrap" fxLayoutAlign="center center"
+        [@animateStagger]="{value:'50'}">
+
+        <!-- BOARD -->
+        <div *ngFor="let ability of abilities">
+            <div class="scrumability-list-item custom-scrumability-listitem" fxLayout="column" fxLayoutAlign="center center"
+                [@animate]="{value:'*',params:{y:'100%'}}">
+                <img *ngIf="ability.ability_image" [src]="transform(ability.ability_image)"
+                    class="transition mb-2 custom-ability-img" (click)="goAbilityDetails(ability)">
+                <img *ngIf="!ability.ability_image" src="assets/none.jpg"
+                    class="transition mb-2 custom-ability-img" (click)="goAbilityDetails(ability)">
+                
+                <button *ngIf="currentUser && currentUser.user_id == ability.ability_userid" mat-mini-fab color="warn"
+                    class="edit-ability-button" (click)="editAbility(ability)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </div>
+            <mat-card-actions fxLayoutAlign="left" class="secondary-text-color" fxLayoutAlign="center" class="p-2">
+                <mat-chip-list class="scrolling-wrapper">
+                    <mat-chip *ngFor="let tag of ability.ability_tags" [removable]="removable" fxLayout="column"
+                        (click)="onClickTag(tag)">
+                        {{tag}}
+                    </mat-chip>
+                </mat-chip-list>
+            </mat-card-actions>
+        </div>
+        <!-- / BOARD -->
+
+        <!-- NEW BOARD BUTTON -->
+        <div>
+            <div class="scrumability-list-item add-new-ability" fxLayout="column" fxLayoutAlign="center center"
+                (click)="newAbility(emptyAbility)" [@animate]="{value:'*',params:{y:'100%'}}">
+                <mat-icon class="s-56">add_circle</mat-icon>
+            </div>
+
+            <mat-chip-list>
+                <mat-chip selected class="custom-matchip-center" (click)="newAbility()">
+                    <div class="board-name">
+                        Add New Ability {{emptyAbility.ability_name ? 'called ' + emptyAbility.ability_name : ''}}
+                    </div>
+                </mat-chip>
+            </mat-chip-list>
+        </div>
+        <!-- / NEW BOARD BUTTON -->
+
+    </div>
+</div>
+<!-- / BOARDS -->

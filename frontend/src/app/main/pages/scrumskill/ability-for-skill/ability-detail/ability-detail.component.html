@@ -1,0 +1,113 @@
+<!-- BOARDS -->
+<div id="abilityDetails" class="fuse-navy" fxLayout="column" fxLayoutAlign="start center" fxFlex fusePerfectScrollbar>
+
+    <!-- HEADER -->
+    <div class="header accent p-16 p-sm-24" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-xs="row"
+        fxLayoutAlign.gt-xs="space-between center">
+
+        <div fxLayout="row" fxLayoutAlign="start center">
+            <div class="logo" fxLayout="row" fxLayoutAlign="start center">
+                <button mat-icon-button (click)="back()" matTooltip="Back" matTooltipPosition="above"
+                    class="text-right">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+                <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    View in steps {{ability ? "(" + ability.ability_name + ")" : ''}}
+                </span>
+            </div>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center">
+            <mat-chip-list aria-label="Fish selection">
+                <mat-chip color="warn" (click)="changeView('grid')"
+                    [ngClass]="viewType == 'grid' ? 'mat-chip-selected':''" selected>
+                    Summary
+                </mat-chip>
+                <mat-chip color="warn" (click)="changeView('list')"
+                    [ngClass]="viewType == 'list' ? 'mat-chip-selected':''">
+                    Detail
+                </mat-chip>
+            </mat-chip-list>
+        </div>
+    </div>
+
+    <!-- abilityDetail LIST -->
+    <div class="abilityDetail-list" fxLayout="row wrap" [@animateStagger]="{value:'50'}" *ngIf="viewType=='grid'">
+        <div fxLayout="column" fxFlex="50" fxFlex.xs="100" fxFlex.sm="100"
+            *ngFor="let detail of abilityDetails; let i = index;">
+            <div class="abilityDetail-list-item custom-abilityDetail-listitem" fxLayoutAlign="start center"
+                [@animate]="{value:'*',params:{y:'100%'}}" (click)="onClickEditStep(detail)">
+                <div class="custom-header-item" fxLayoutAlign="center center">
+                    {{i + 1}}
+                </div>
+                <div class="custom-content-item pl-8" fxLayoutAlign="start center">
+                    {{detail.ad_title}}
+                </div>
+            </div>
+            <mat-card-actions fxLayoutAlign="left" fxLayoutAlign="start center" class="mx-16" fxFlex="50"
+                fxFlex.xs="100" fxFlex.sm="100">
+                <mat-chip-list class="custom-mapchiplist">
+                    <mat-chip *ngFor="let tag of detail.ad_tags" [removable]="removable">
+                        {{tag}}
+                    </mat-chip>
+                    <mat-chip [removable]="removable" (click)="onClickAddNewTag(detail)" color="warn" selected>
+                        + New Tag
+                    </mat-chip>
+                </mat-chip-list>
+            </mat-card-actions>
+        </div>
+        <div fxLayout="column" fxFlex="50" fxFlex.xs="100" fxFlex.sm="100">
+            <div class="abilityDetail-list-item custom-abilityDetail-listitem" fxLayoutAlign="start center"
+                [@animate]="{value:'*',params:{y:'100%'}}" (click)="onClickNewStep()">
+                <div class="custom-header-item" fxLayoutAlign="center center">
+                    +
+                </div>
+                <div class="custom-content-item pl-8" fxLayoutAlign="start center">
+                    Add Step
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="abilityDetail-list" fxLayout="row wrap" [@animateStagger]="{value:'50'}" *ngIf="viewType=='list'">
+        <div fxLayout="column" fxFlex="100" [@animate]="{value:'*',params:{y:'100%'}}" class="p-16">
+            <div class="fuse-card custom-detail-card" *ngIf="selectedStep">
+
+                <div fxLayout="row" fxLayoutAlign="start center" (click)="onClickEditStep(selectedStep)">
+
+                    <div class="w-60 h-60 custom-index indigo" fxLayoutAlign="center center">
+                        {{selectedIndex}}
+                    </div>
+                    <div class="pl-16">
+                        <div class="h4 secondary-text">{{selectedStep.ad_title}}</div>
+                    </div>
+                </div>
+                <div class="p-16 line-height-1.75" [innerHTML]="selectedStep.ad_description"
+                    (click)="onClickEditStep(selectedStep)" style="white-space: pre-wrap">
+                    <!-- {{selectedStep.ad_description}} -->
+                </div>
+            </div>
+            <mat-card-actions fxLayoutAlign="left" fxLayoutAlign="start center" class="mx-4 my-16" fxFlex="50"
+                fxFlex.xs="100" fxFlex.sm="100" *ngIf="selectedStep">
+                <mat-chip-list class="custom-mapchiplist">
+                    <mat-chip *ngFor="let tag of selectedStep.ad_tags" [removable]="removable">
+                        {{tag}}
+                    </mat-chip>
+                    <mat-chip [removable]="removable" (click)="onClickAddNewTag(selectedStep)" color="warn" selected>
+                        + New Tag
+                    </mat-chip>
+                </mat-chip-list>
+            </mat-card-actions>
+        </div>
+
+        <div *ngFor="let detail of abilityDetails; let i = index;"
+            class="example-ripple-container mat-elevation-z4 ml-16" matRipple matRippleCentered="true"
+            (click)="onClickStepIndex(i+1, detail)" [hidden]="(i+1) == selectedIndex">
+            {{i+1}}
+        </div>
+        <div class="example-ripple-container mat-elevation-z4 ml-16 warn" matRipple matRippleCentered="true"
+            (click)="onClickNewStep()">
+            +
+        </div>
+
+    </div>
+    <!-- / BOARDS -->
