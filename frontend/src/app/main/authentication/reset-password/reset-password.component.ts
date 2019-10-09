@@ -8,6 +8,8 @@ import { fuseAnimations } from '@fuse/animations';
 import { ActivatedRoute } from '@angular/router';
 import { CommonAlertService } from 'app/shared/common-alert.service';
 import { AuthenticateService } from 'app/shared/services/authenticate.service';
+import { encDecKey } from 'app/shared/data/variable';
+import { EncDecServiceService } from 'app/shared/services/enc-dec-service.service';
 
 @Component({
     selector: 'reset-password',
@@ -27,7 +29,8 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     constructor(
         private _fuseConfigService: FuseConfigService, private _formBuilder: FormBuilder,
         private activatedRoute: ActivatedRoute, private authService: AuthenticateService,
-        private commonAlertService: CommonAlertService
+        private commonAlertService: CommonAlertService,
+        private encDecService: EncDecServiceService,
     ) {
         this.activatedRoute.paramMap.subscribe(map => {
             this.resetToken = map.get('resetToken');
@@ -81,7 +84,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
         if (this.resetPasswordForm.valid && this.resetToken) {
             this.isSendingPassword = true;
             let dataset = {
-                password: this.resetPasswordForm.value['password'],
+                password: this.encDecService.set(encDecKey, this.resetPasswordForm.value['password']),
                 resetToken: this.resetToken
             };
             this.authService.resetPassword(dataset).subscribe(response => {

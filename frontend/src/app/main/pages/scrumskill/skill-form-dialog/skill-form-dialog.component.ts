@@ -20,7 +20,7 @@ export class SkillFormDialogComponent {
   skill: Skill;
   skillForm: FormGroup;
   dialogTitle: string;
-  private skillbgColors = colors;
+  public skillbgColors = colors;
   currentUser: any;
 
   fileData: File = null;

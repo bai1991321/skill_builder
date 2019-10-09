@@ -23,12 +23,13 @@ import { MatSnackBarModule } from '@angular/material';
 
 import { AppRoutingModule } from "./app-routing.module";
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { EncDecServiceService } from './shared/services/enc-dec-service.service';
 
 @NgModule({
     declarations: [
         AppComponent,
     ],
-    imports     : [
+    imports: [
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
@@ -43,23 +44,23 @@ import { ImageCropperModule } from 'ngx-image-cropper';
         MatButtonModule,
         MatIconModule,
         MatSnackBarModule,
-        
+
         // Fuse modules
         FuseModule.forRoot(fuseConfig),
         FuseProgressBarModule,
         FuseSharedModule,
         FuseSidebarModule,
-        
+
         ImageCropperModule,
 
         // App modules
         LayoutModule,
         AppStoreModule
     ],
-    bootstrap   : [
+    providers: [EncDecServiceService],
+    bootstrap: [
         AppComponent
     ]
 })
-export class AppModule
-{
+export class AppModule {
 }

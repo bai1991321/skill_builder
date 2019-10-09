@@ -21,11 +21,11 @@
             <mat-chip-list aria-label="Fish selection">
                 <mat-chip color="warn" (click)="changeView('grid')"
                     [ngClass]="viewType == 'grid' ? 'mat-chip-selected':''" selected>
-                    Summary
+                    expand all
                 </mat-chip>
                 <mat-chip color="warn" (click)="changeView('list')"
                     [ngClass]="viewType == 'list' ? 'mat-chip-selected':''">
-                    Detail
+                    collapse all
                 </mat-chip>
             </mat-chip-list>
         </div>

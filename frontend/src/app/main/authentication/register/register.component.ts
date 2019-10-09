@@ -8,6 +8,8 @@ import { fuseAnimations } from '@fuse/animations';
 import { Router } from '@angular/router';
 import { AuthenticateService } from 'app/shared/services/authenticate.service';
 import { CommonAlertService } from 'app/shared/common-alert.service';
+import { encDecKey } from 'app/shared/data/variable';
+import { EncDecServiceService } from 'app/shared/services/enc-dec-service.service';
 
 @Component({
     selector: 'register',
@@ -22,6 +24,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private _unsubscribeAll: Subject<any>;
     constructor(
         private _fuseConfigService: FuseConfigService, private _formBuilder: FormBuilder,
+        private encDecService: EncDecServiceService,
         private router: Router, private authService: AuthenticateService, private commonAlertService: CommonAlertService
     ) {
         // Configure the layout
@@ -59,7 +62,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
             let formData = {
                 user_email: registerForm.email,
                 user_name: registerForm.name,
-                user_password: registerForm.password
+                user_password: this.encDecService.set(encDecKey, registerForm.password)
             }
             this.isSaving = true;
             this.authService.register(formData).subscribe((response) => {

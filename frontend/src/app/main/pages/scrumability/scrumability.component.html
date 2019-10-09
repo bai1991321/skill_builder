@@ -22,7 +22,7 @@
 
                 <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
                     <mat-icon>search</mat-icon>
-                    <input placeholder="Search for a contact" (keyup.enter)="onEnterSearch($event)"
+                    <input placeholder="Search" (keyup.enter)="onEnterSearch($event)"
                         [(ngModel)]="searchText">
                 </div>
             </div>
@@ -73,7 +73,7 @@
         <!-- NEW BOARD BUTTON -->
         <div>
             <div class="scrumability-list-item add-new-ability" fxLayout="column" fxLayoutAlign="center center"
-                (click)="newAbility(emptyAbility)" [@animate]="{value:'*',params:{y:'100%'}}">
+                (click)="newAbility()" [@animate]="{value:'*',params:{y:'100%'}}">
                 <mat-icon class="s-56">add_circle</mat-icon>
             </div>
 

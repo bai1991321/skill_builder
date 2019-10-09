@@ -5,8 +5,9 @@ import { FormGroup, FormBuilder, Validators, FormGroupName, ValidatorFn, Abstrac
 import { AuthenticateService } from 'app/shared/services/authenticate.service';
 import { UserService } from 'app/shared/services/user.service';
 import { CommonAlertService } from 'app/shared/common-alert.service';
-import { tokenKey } from 'app/shared/data/variable';
+import { tokenKey, encDecKey } from 'app/shared/data/variable';
 import { ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';
+import { EncDecServiceService } from 'app/shared/services/enc-dec-service.service';
 
 @Component({
     selector: 'profile',
@@ -25,6 +26,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
     isChangingPasswordForm: boolean = false;
     isChangingPhotoForm: boolean = false;
 
+    originalName: string;
+    originalImage: string;
+    originalPassword: string;
 
     /** 
      * variables for CropImage
@@ -38,11 +42,18 @@ export class ProfileComponent implements OnInit, OnDestroy {
      */
     constructor(
         private _formBuilder: FormBuilder, private authService: AuthenticateService,
-        private userService: UserService, private commonAlertService: CommonAlertService
+        private userService: UserService, private commonAlertService: CommonAlertService,
+        public encDecService: EncDecServiceService
     ) {
         this.currentUser = this.authService.currentUserValue;
+        this.originalName = this.currentUser.user_name;
+        this.originalImage = this.currentUser.user_image
+        this.originalPassword = this.currentUser.user_password;
     }
     ngOnInit(): void {
+
+
+
         // Reactive Form
         this.mainForm = this._formBuilder.group({
             user_name: [this.currentUser.user_name, Validators.required]
@@ -72,6 +83,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
             this.userService.updateUserInfo(formData).subscribe((result) => {
                 this.isChangingMainForm = false;
                 this.currentUser.user_name = result.user_name;
+                this.originalName = result.user_name;
                 localStorage.setItem(tokenKey, JSON.stringify(this.currentUser));
                 this.authService.currentUserSubject.next(this.currentUser);
                 this.commonAlertService.typeSuccess('Name', 'changed your name.', 6000);
@@ -85,10 +97,20 @@ export class ProfileComponent implements OnInit, OnDestroy {
         if (this.passwordForm.valid) {
             this.isChangingPasswordForm = true;
             const formData = this.passwordForm.value;
+            var encrypted = this.encDecService.set(encDecKey, formData.user_password);
+            if (encrypted == this.originalPassword) {
+                this.commonAlertService.typeError('Password', "It is the same as the current password and cannot be changed.", 6000);
+                return;
+            }
             formData.user_id = this.currentUser.user_id;
+            formData.user_password = encrypted;
             this.userService.updateUserPassword(formData).subscribe((result) => {
                 this.isChangingPasswordForm = false;
                 this.passwordForm.reset();
+                this.currentUser.user_password = encrypted;
+                this.originalPassword = encrypted;
+                localStorage.setItem(tokenKey, JSON.stringify(this.currentUser));
+                this.authService.currentUserSubject.next(this.currentUser);
                 this.commonAlertService.typeSuccess('Password', 'changed your password.', 6000);
             }, (error) => {
                 this.isChangingPasswordForm = false;
@@ -103,6 +125,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.userService.updateUserPhoto(formData).subscribe((result) => {
             this.isChangingPhotoForm = false;
             this.currentUser.user_image = result.user_image;
+            this.originalImage = result.user_image;
             localStorage.setItem(tokenKey, JSON.stringify(this.currentUser));
             this.authService.currentUserSubject.next(this.currentUser);
             this.commonAlertService.typeSuccess('Avatar', 'changed your photo.', 6000);

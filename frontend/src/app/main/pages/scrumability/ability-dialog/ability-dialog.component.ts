@@ -163,7 +163,7 @@ export class AbilityDialogComponent {
     return this.allTags.filter(fruit => fruit.tag_name.toLowerCase().indexOf(filterValue) === 0);
   }
 
-  openFileBrowser(event: any) {
+  openFileBrowser() {
     var temp = document.getElementById('ability_image');
     temp.click();
   }

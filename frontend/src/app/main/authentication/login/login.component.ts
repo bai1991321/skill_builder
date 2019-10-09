@@ -6,6 +6,8 @@ import { fuseAnimations } from '@fuse/animations';
 import { Router } from '@angular/router';
 import { CommonAlertService } from 'app/shared/common-alert.service';
 import { AuthenticateService } from 'app/shared/services/authenticate.service';
+import { encDecKey } from 'app/shared/data/variable';
+import { EncDecServiceService } from 'app/shared/services/enc-dec-service.service';
 
 @Component({
     selector: 'login',
@@ -25,6 +27,7 @@ export class LoginComponent implements OnInit {
      */
     constructor(
         private _fuseConfigService: FuseConfigService, private _formBuilder: FormBuilder,
+        private encDecService: EncDecServiceService,
         private authService: AuthenticateService, private router: Router, private commonAlertService: CommonAlertService
     ) {
         // Configure the layout
@@ -54,7 +57,10 @@ export class LoginComponent implements OnInit {
 
     onSubmit() {
         if (this.loginForm.valid) {
-            this.authService.login(this.loginForm.value).subscribe(result => {
+            const formData = this.loginForm.value;
+            formData.user_password = this.encDecService.set(encDecKey, formData.user_password);
+            console.log(formData);
+            this.authService.login(formData).subscribe(result => {
                 if (result.statusCode == 401) {
                     this.commonAlertService.typeError('Error', result.statusMessage);
                 } else {

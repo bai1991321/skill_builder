@@ -1,5 +1,6 @@
 export var tokenKey: string = "skill_builder_token";
-export var api_url = 'http://localhost:3000';
+export var api_url = 'http://ec2-18-218-165-214.us-east-2.compute.amazonaws.com:3000';
+export var encDecKey = '123456$#@$^@1ERF';
 
 export var public_state = 'public';
 export var private_state = 'private';
